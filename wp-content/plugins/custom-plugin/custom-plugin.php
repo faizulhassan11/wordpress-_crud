@@ -31,10 +31,10 @@ function ems_add_admin_menu()
 //  Menu handle Callback
 function ems_crud_system()
 {
-
+   include_once (EMS_PLUGIN_PATH."pages/add-employee.php");
 }
 
 function ems_list_employee(){
-    echo "<h2>Welcome to List Employee Page</h2>";
+    include_once (EMS_PLUGIN_PATH."pages/list-employee.php");
 }
 
