@@ -1,20 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php 
+  global $wpdb;
+  $table_name = $wpdb->prefix . "ems_form_data";
+  $employees = $wpdb->get_results("SELECT * FROM $table_name",ARRAY_A);
 
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
-
-</head>
-
-<body>
-
+  // print_r($employees);
+?>
   <div class="container mt-3">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-10">
         <h2>List Employees</h2>
 
         <div class="panel-heading">List Employee</div>
@@ -26,22 +19,32 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Gender</th>
+                <th>Phone No</th>
                 <th>Designation</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
+              <?php 
+              if(count($employees)>0){
+                foreach($employees as $employee){
+               ?>
               <tr>
-                <td>1</td>
-                <td>Jhon</td>
-                <td>july@example.com</td>
-                <td>Male</td>
-                <td>PHP Developer</td>
+                <td><?php echo $employee['id']; ?></td>
+                <td><?php echo $employee['name']; ?></td>
+                <td><?php echo $employee['email']; ?></td>
+                <td><?php echo $employee['gender']; ?></td>
+                <td><?php echo $employee['phone_no']; ?></td>
+                <td><?php echo $employee['designation']; ?></td>
                 <td>
-                  <a href="javascript:void(0)" class="btn btn-warning">Edit</a>
-                  <a href="javascript:void(0)" class="btn btn-danger">Delete</a>
-                  <a href="javascript:void(0)" class="btn btn-info">View</a>
+                  <a href="admin.php?page=employee-system&action=edit&empId=<?php echo $employee['id']?>" class="btn btn-warning">Edit</a>
+                  <a href="admin.php?page=ems-list-employee&action=delete&empId=<?php echo $employee['id']?>" class="btn btn-danger">Delete</a>
+                  <a href="admin.php?page=employee-system&action=view&empId=<?php echo $employee['id']?>" class="btn btn-info">View</a>
                 </td>
               </tr>
+              <?php 
+              }}
+              ?>
             </tbody>
           </table>
         </div>
@@ -50,15 +53,3 @@
       </div>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
-
-  <script>
-    $(function () {
-      new DataTable('#tbl-employee');
-    })
-  </script>
-
-</body>
-
-</html>
